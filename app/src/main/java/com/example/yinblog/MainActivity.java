@@ -15,6 +15,9 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mplayer;
@@ -28,6 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void pause(View view){
         mplayer.pause();
+    }
+
+    public void linearButtonTapped(View view){
+        mplayer.stop();
+        int id = view.getId();
+        String tapId;
+        tapId = view.getResources().getResourceEntryName(id);
+        Log.i("button tap id ",  tapId);
+        int resourceId = getResources().getIdentifier(tapId, "raw", getPackageName());
+
+        mplayer= MediaPlayer.create(this, resourceId);
+
+
+        mplayer.start();
+
     }
 
     public void unfavor(View view){
@@ -77,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        SeekBar volControl = (SeekBar) findViewById(R.id.seekBar);
+        final SeekBar volControl = (SeekBar) findViewById(R.id.seekBar);
+
         volControl.setMax(maxVolume);
         volControl.setProgress(curVolume);
 

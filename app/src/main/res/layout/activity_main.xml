@@ -23,19 +23,20 @@
         android:id="@+id/myTextField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <ImageView
         android:id="@+id/blankStar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="116dp"
         android:clickable="true"
         android:onClick="favor"
@@ -47,7 +48,7 @@
         android:id="@+id/fullStar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="116dp"
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,33 +59,64 @@
         android:id="@+id/playAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="44dp"
         android:onClick="playAudio"
         android:text="play audio"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/stopAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="44dp"
         android:onClick="pause"
         android:text="stop audio"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playAudio" />
 
     <SeekBar
         android:id="@+id/seekBar"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="247dp"
         android:layout_height="0dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="8dp"
         android:max="10"
         android:progress="3"
         app:layout_constraintTop_toBottomOf="@+id/playAudio"
-        tools:layout_editor_absoluteX="60dp" />
+        tools:layout_editor_absoluteX="24dp" />
+
+    <LinearLayout
+        android:layout_width="412dp"
+        android:layout_height="114dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="350dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2">
+
+        <ImageButton
+            android:id="@+id/bells"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="bells"
+            android:onClick="linearButtonTapped"
+            android:src="@drawable/ic_launcher_foreground"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageButton
+            android:id="@+id/heavy_rain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="linearButtonTapped"
+            android:src="@android:drawable/arrow_down_float"
+            tools:srcCompat="@tools:sample/avatars" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
