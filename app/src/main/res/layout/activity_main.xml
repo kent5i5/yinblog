@@ -19,46 +19,17 @@
         tools:layout_editor_absoluteX="5dp"
         tools:layout_editor_absoluteY="68dp" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="400dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FFFFFD"
-        android:onClick="contextButtonClicked"
-        android:text="Story 2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        tools:layout_editor_absoluteX="5dp" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="400dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FFFFFD"
-        android:onClick="contextButtonClicked"
-        android:text="Story 3"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        tools:layout_editor_absoluteX="5dp" />
-
     <EditText
         android:id="@+id/myTextField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/blankStar"
@@ -82,5 +53,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <Button
+        android:id="@+id/playAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="216dp"
+        android:onClick="playAudio"
+        android:text="play audio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/stopAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="216dp"
+        android:onClick="pause"
+        android:text="stop audio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="247dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="56dp"
+        android:max="10"
+        android:progress="3"
+        app:layout_constraintTop_toBottomOf="@+id/playAudio"
+        tools:layout_editor_absoluteX="60dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
