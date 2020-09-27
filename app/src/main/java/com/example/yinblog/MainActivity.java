@@ -3,25 +3,117 @@ package com.example.yinblog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mplayer;
     AudioManager audioManager;
+
+
+    public class DownLoadContent extends AsyncTask<String, Void, String> {
+
+        // this methods is accessable anywhere in the package
+        @Override
+        protected String doInBackground(String... urls) {
+
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try{
+                url = new URL(urls[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+
+                InputStreamReader reader = new InputStreamReader(in);
+                int data = reader.read();
+                while (data != -1){
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
+                }
+                return result;
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return "fail";
+        }
+    }
+
+    public class ImageDownloader extends  AsyncTask<String, Void, Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                connection.connect();
+                InputStream inputStream = connection.getInputStream();
+                Bitmap bitmapImage = BitmapFactory.decodeStream(inputStream);
+                return bitmapImage;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public void downloadImage(View view) {
+        ImageDownloader task = new ImageDownloader();
+        Bitmap myImage;
+
+        try {
+            myImage = task.execute("https://i.pinimg.com/474x/37/97/3c/37973cc70fa371a32c4f9cbfca06ef9c.jpg").get();
+
+            ImageButton imageButtonOne = (ImageButton)findViewById(R.id.bells);
+            imageButtonOne.setImageBitmap(myImage);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void updateTimerView(long secondsleft){
+        int minutes = (int) secondsleft /60;
+        int seconds = (int)secondsleft - minutes *60;
+
+        TextView timerTextView = (TextView) findViewById(R.id.timerTextView);
+        timerTextView.setText(String.valueOf(secondsleft/1000));
+    }
 
     public void playAudio(View view){
 
@@ -42,10 +134,9 @@ public class MainActivity extends AppCompatActivity {
         int resourceId = getResources().getIdentifier(tapId, "raw", getPackageName());
 
         mplayer= MediaPlayer.create(this, resourceId);
-
-
         mplayer.start();
 
+        downloadImage(view);
     }
 
     public void unfavor(View view){
@@ -120,6 +211,46 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        //timer
+//        final Handler handler = new Handler();
+//        Runnable run = new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.i("Runnalbe has run ",  "a second has passed");
+//
+//                handler.postDelayed(this, 1000);
+//            };
+//        };
+//
+//        handler.post(run);
+
+        new CountDownTimer(10000, 1000)
+        {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.i("Second left", String.valueOf(millisUntilFinished/1000) );
+                updateTimerView(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+
+
+        DownLoadContent task = new DownLoadContent();
+        String result = " ";
+        try {
+            result = task.execute("http://www.ecowebhosting.co.sk/").get();
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        Log.i("Result " , result);
 
 //        VideoView videoView = (VideoView) findViewById(R.id.videoView);
 //        MediaController mediaController = new MediaController(this);
